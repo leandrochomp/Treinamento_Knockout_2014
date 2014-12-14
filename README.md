@@ -1,4 +1,4 @@
 Treinamento_Knockout_2014
 =========================
 
-Treinamento simples de Knockout
+Treinamento simples de Knockout utilizando bootstrap.
