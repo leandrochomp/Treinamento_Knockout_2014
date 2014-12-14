@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8"/> 
+</head>
+<title>Treinamento</title>
+	<body>
+
+		<div class="container">
+			<h2>Treinamento - Knockout 2014</h2>
+
+		<form class="form-horizontal" role="form">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Nome:</label>
+				<div class="col-sm-10">
+      				<input class="form-control" data-bind="value: edtNome" required/>
+    			</div>
+			</div>	
+			
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Idade:</label>
+				<div class="col-sm-10">
+      				<input class="form-control" data-bind="value: edtIdade" required/>
+    			</div>
+    		</div>
+
+    		<div class="form-group">
+				<label class="col-sm-2 control-label">Profissão:</label> 
+				<div class="col-sm-10">
+      				<input class="form-control" data-bind="value:edtProfissao" required/>
+    			</div>
+    		</div>
+
+			<div>
+				<button type="button" data-bind="button: adicionarFuncionario" class="btn btn-primary">Incluir</button>
+				<button type="button" data-bind="click: limparDadosForm" class="btn btn-primary">Limpar</button>
+			</div>
+		</form>
+
+				<div class="table-responsive">
+					<table class="table table-bordered table-hover">
+						<thead>
+							<tr>
+								<h3><th>Nome</th></h3>
+								<h3><th>Idade</th></h3>
+								<h3><th>Profissão</th></h3>
+								<h3><th>Ações</th></h3>
+							</tr>
+						</thead>
+						<tbody data-bind="foreach: coFuncionarios">
+							<td><input data-bind="value: nome" /></td>
+							<td><input data-bind="value: idade" /></td>
+							<td><input data-bind="value: profissao" /></td>
+							<td><a href="#" data-bind="click: $root.removerFuncionario">Remover</a></td>
+						</tbody>
+					</table>
+				</div>
+		</div>
+
+			<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
+			<script src='https://cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-debug.js'></script>
+			
+			<script type="text/javascript">
+
+				var Funcionario = function (nome,idade,profissao) {
+					var self = this;
+
+					self.nome = nome;
+					self.idade = idade;
+					self.profissao = profissao;
+				}
+
+				function CadastroViewModel() {
+					var self = this;
+
+					self.edtNome = ko.observable();
+					self.edtIdade = ko.observable();
+					self.edtProfissao = ko.observable();
+
+					self.coFuncionarios = ko.observableArray([]);
+
+					self.adicionarFuncionario = function() {
+						self.coFuncionarios.push(new Funcionario (this.edtNome(), this.edtIdade(), this.edtProfissao()));
+						self.limparDadosForm();
+					};
+
+
+					self.limparDadosForm = function() {
+							self.edtNome("");
+							self.edtIdade("");
+							self.edtProfissao("");
+					};
+
+					self.removerFuncionario = function(funcionario) { 
+						self.coFuncionarios.remove(funcionario) 
+					};
+						
+				};
+
+				$(document).ready(function() {
+					ko.applyBindings(new CadastroViewModel());
+				});			
+			</script>
+	</body>
+</html>
